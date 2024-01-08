@@ -22,7 +22,7 @@ def dat_files(folder_path):
         for file_name in files:
             if file_name.endswith(".dat"):
                 file_path = os.path.join(root, file_name)
-                print(f"{file_name} fálj megtalálva.")
+                print(f"{file_name} fájl megtalálva.")
                 
                 with open(file_path, 'r') as file:
                     try:
@@ -41,23 +41,42 @@ def dat_files(folder_path):
                         
                     except json.JSONDecodeError as e:
                         print(f"Error {file_name}: {e}")
-    
+    print()
+    print("Talált elemek listázása")
+    print()
     return objects
 
-def print_object(obj):
+def print_object_bicikli(obj):
     if isinstance(obj, Bicikli):
-        print(f"ID: {obj.id}")
-        print(f"Type: {obj.type}")
-        print(f"Terhelhetoseg: {obj.terhelhetoseg}")
-        print(f"Marka: {obj.marka}")
-    elif isinstance(obj, Auto):
-        print(f"ID: {obj.id}")
-        print(f"Type: {obj.type}")
-        print(f"Ajtok Szama: {obj.ajtok_szama}")
-        print(f"Marka: {obj.marka}")
-    print()   
+        print(f"ID: {obj.id}", f"Type: {obj.type}", f"Terhelhetoseg: {obj.terhelhetoseg}", f"Marka: {obj.marka}" )
+        print("-------------------")
+    else: pass
+    
+def print_object_auto(obj):
+    if isinstance(obj, Auto):
+        print(f"ID: {obj.id}", f"Type: {obj.type}", f"Ajtok Szama: {obj.ajtok_szama}", f"Marka: {obj.marka}")
+        print("-------------------") 
+    else: pass
 
 folder_path = "data"
 objects = dat_files(folder_path)
+
+biciklik_printed = False
+autok_printed = False
+
 for obj in objects:
-    print_object(obj)
+    if isinstance(obj, Auto):
+        if not autok_printed:
+            print("Autok:")
+            autok_printed = True
+    print_object_auto(obj)
+
+for obj in objects:
+    if isinstance(obj, Bicikli):
+        if not biciklik_printed:
+            print("Biciklik:")
+            biciklik_printed = True
+    print_object_bicikli(obj)
+
+    
+input("")
