@@ -51,16 +51,13 @@ def dat_files(folder_path):
         print(f"{count} találat",f"Mappa:'{folder_path}'")
     return objects
 
-def print_object_bicikli(obj):
+def print_objects(obj):
     if isinstance(obj, Bicikli):
         print(f"ID: {obj.id}", "|", f"Type: {obj.type}", "|", f"Terhelhetoseg: {obj.terhelhetoseg}", "|", f"Marka: {obj.marka}" )
         print("---------------------------------------------------------")
-    else: pass
-    
-def print_object_auto(obj):
-    if isinstance(obj, Auto):
+    elif isinstance(obj, Auto):
         print(f"ID: {obj.id}", "|", f"Type: {obj.type}", "|", f"Ajtok Szama: {obj.ajtok_szama}", "|", f"Marka: {obj.marka}")
-        print("---------------------------------------------------------") 
+        print("---------------------------------------------------------")
     else: pass
     
 folder_path = "data"
@@ -74,14 +71,14 @@ for obj in objects:
         if not autok_printed:
             print("Autok:")
             autok_printed = True
-    print_object_auto(obj)
+        print_objects(obj)
 
 for obj in objects:
     if isinstance(obj, Bicikli):
         if not biciklik_printed:
             print("Biciklik:")
             biciklik_printed = True
-    print_object_bicikli(obj)
+        print_objects(obj)
 
 
 input("")
