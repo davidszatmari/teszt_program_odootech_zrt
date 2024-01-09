@@ -17,12 +17,14 @@ class Bicikli:
 
 def dat_files(folder_path):
     objects = []
+    count = 0
     print("Program elindult.")
     for root, dirs, files in os.walk(folder_path):
         for file_name in files:
             if file_name.endswith(".dat"):
                 file_path = os.path.join(root, file_name)
                 print(f"{file_name} fájl megtalálva.")
+                count += 1
                 
                 with open(file_path, 'r') as file:
                     try:
@@ -41,23 +43,22 @@ def dat_files(folder_path):
                         
                     except json.JSONDecodeError as e:
                         print(f"Error {file_name}: {e}")
-    print()
-    print("Talált elemek listázása")
-    print()
+    if count >= 1:
+        print()
+        print("Talált elemek listázása")
+        print()
+    else:
+        print(f"{count} találat",f"Mappa:'{folder_path}'")
     return objects
 
-def print_object_bicikli(obj):
+def print_objects(obj):
     if isinstance(obj, Bicikli):
-        print(f"ID: {obj.id}", f"Type: {obj.type}", f"Terhelhetoseg: {obj.terhelhetoseg}", f"Marka: {obj.marka}" )
-        print("-------------------")
-    else: pass
+        print(f"ID: {obj.id}", "|", f"Type: {obj.type}", "|", f"Terhelhetoseg: {obj.terhelhetoseg}", "|", f"Marka: {obj.marka}" )
+        print("---------------------------------------------------------")
+    elif isinstance(obj, Auto):
+        print(f"ID: {obj.id}", "|", f"Type: {obj.type}", "|", f"Ajtok Szama: {obj.ajtok_szama}", "|", f"Marka: {obj.marka}")
+        print("---------------------------------------------------------") 
     
-def print_object_auto(obj):
-    if isinstance(obj, Auto):
-        print(f"ID: {obj.id}", f"Type: {obj.type}", f"Ajtok Szama: {obj.ajtok_szama}", f"Marka: {obj.marka}")
-        print("-------------------") 
-    else: pass
-
 folder_path = "data"
 objects = dat_files(folder_path)
 
@@ -69,14 +70,11 @@ for obj in objects:
         if not autok_printed:
             print("Autok:")
             autok_printed = True
-    print_object_auto(obj)
-
-for obj in objects:
-    if isinstance(obj, Bicikli):
+    elif isinstance(obj, Bicikli):
         if not biciklik_printed:
             print("Biciklik:")
             biciklik_printed = True
-    print_object_bicikli(obj)
+    print_objects(obj)
 
-    
+
 input("")
